@@ -3,12 +3,10 @@
 #SBATCH --partition=amilan
 #SBATCH --job-name=micc_pipeline
 #SBATCH --output=test_micro-c_pipeline.%j.out
-#SBATCH --time=12:00:00
-#SBATCH --qos=normal
-#SBATCH --nodes=2
+#SBATCH --time=168:00:00
+#SBATCH --qos=long
+#SBATCH --nodes=18
 #SBATCH --ntasks=18
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=jasonher@colostate.edu
 
 module purge
 module load anaconda
