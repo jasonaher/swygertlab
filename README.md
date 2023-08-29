@@ -21,7 +21,9 @@ overlap_dist_decay.py is not called inside the pipeline and is there if you need
 
 There are a couple assumptions made by the MicC_pipeline_V3.sh pipeline mostly about the absolute paths of files, and can be changed in the 
 batch script itself if desired or simply follow the file directory scheme.
+
 Firstly, the genome of your organism is in a folder called Saccer3. # See line 30
+
 Secondly, the size of each chromosome is in a folder called microc and the file is called sacCer3.chrSizes. # See lines 35 and 80-83
 
 In order, for the java jar commands to work you need to download a jar file from the aiden lab github here -> https://github.com/aidenlab/juicer/wiki/Download 
