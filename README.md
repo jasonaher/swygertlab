@@ -13,7 +13,7 @@ The main focal point of the pipeline begins with MicC_pipeline_V3.sh and if prop
 This code was designed with simplicity for the user in mind, and in parallel with this running the MicC_pipeline_V3.sh with your .fastq files
 should be all that is needed. 
 
-example: sbatch MicC_pipeline_V3.sh your_microc_dataR1.fastq your_microc_dataR2.fastq
+example: sbatch MicC_pipeline_V3.sh your_microc_dataR1.fastq your_microc_dataR2.fastq pick_a_title_for_your_data
 
 distance_decay.py is called inside the pipeline and will output a graph containing the average short contacts of the different orientations.
 
