@@ -30,4 +30,4 @@ this file is also assumed to be in the working directory.
 The MicC_pipeline_V3.sh pipeline also assumes that the associated python scripts are in the working directory. 
 These are part of this repository and are:
 - filter_pairs.py
-- python distance_decay.py
+- distance_decay.py
