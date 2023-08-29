@@ -31,3 +31,13 @@ The MicC_pipeline_V3.sh pipeline also assumes that the associated python scripts
 These are part of this repository and are:
 - filter_pairs.py
 - distance_decay.py
+
+There are some additional scripts here that are available for other uses.
+
+Starting with:
+
+overlap_distance_decay.py
+
+This script is intended to take two separate datasets of micro-c data in a .pairs file and simply creates an overlapping graph of them.
+
+Can be used like this: python overlap_distance_decay.py sample1.pairs sample2.pairs
