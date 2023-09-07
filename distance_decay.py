@@ -53,6 +53,7 @@ def create_distance_decay_plot_list(file_to_read):
 
 def create_distance_decay_plot(lis, type_of_lis, set_limit="False"):
     plot_name = pairs_file_name + type_of_lis + '.png'
+    plot_name2 = pairs_file_name + type_of_lis + '.svg'
     df = pd.DataFrame({
         'x_axis': [lis[i][0] for i in range(0, int(distance_graphed), 2)],
         'y_axis': [lis[i][1] for i in range(1, int(distance_graphed)+1, 2)]
@@ -66,6 +67,7 @@ def create_distance_decay_plot(lis, type_of_lis, set_limit="False"):
     plt.title(pairs_file_name + 'distance decay plot')
     plt.legend(fontsize='10')
     plt.savefig(plot_name)
+    plt.plot_name(plot_name2)
     plt.close()
 
 
