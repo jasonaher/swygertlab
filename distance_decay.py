@@ -4,9 +4,21 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 pairs_file = sys.argv[1]
-reads_in_pairs_file = float(sys.argv[2]) #the script needs to know the total amount of reads in the respective orientation
+reads_in_pairs_file = float(sys.argv[2])  # the script needs to know the total amount of reads in the respective orientation
+distance_graphed = sys.argv[3]  # the distance you want to get graphed
+# note that python stops 1 before the number so if you want to stop at 200 the input needs to be 201
+
+#in order to set graph limits change False to True and then add the 4 limit numbers
+set_limit = sys.argv[4]
+if set_limit is "True"
+    x_limit = [sys.argv[5], sys.argv[6]]  # example values [0, 1000]
+    y_limit = [sys.argv[7], sys.argv[8]]  # example values [0, 0.025]
+
+
 pairs_file_name = pairs_file[0:pairs_file.find('.')]
-contacts = np.zeros((1531935,), dtype=float) #the number of bins is supposed to be the summation of all the chromosomes base pair count to the next highest 10 and then take out the 0
+contacts = np.zeros((1531935,),
+                    dtype=float)  # the number of bins is supposed to be the summation of all the chromosomes base
+# pair count to the next highest 10 and then take out the 0
 distance = np.arange(0, 15319350, 10)
 contact_probability = np.zeros((1531935,), dtype=float)
 dist_orientation_decay = np.vstack((distance, contact_probability)).T
@@ -36,19 +48,19 @@ def create_distance_decay_plot_list(file_to_read):
         pairs_line = read_pairs_file.readline()
     dist_orientation_decay[:, 1] += (contacts / reads_in_pairs_file)
     contacts.tofile(pairs_file_name + '_contacts_in_bin.txt', sep=' ', format='%s')
-    create_distance_decay_plot(dist_orientation_decay, 'ori_decay_')
+    create_distance_decay_plot(dist_orientation_decay, 'ori_decay_', set_limit)
 
 
-def create_distance_decay_plot(lis, type_of_lis):
-    
+def create_distance_decay_plot(lis, type_of_lis, set_limit="False"):
     plot_name = pairs_file_name + type_of_lis + '.png'
     df = pd.DataFrame({
-        'x_axis': [lis[i][0] for i in range(0, 201, 2)],
-        'y_axis': [lis[i][1] for i in range(1, 202, 2)]
+        'x_axis': [lis[i][0] for i in range(0, int(distance_graphed), 2)],
+        'y_axis': [lis[i][1] for i in range(1, int(distance_graphed)+1, 2)]
     })
     plt.plot('x_axis', 'y_axis', data=df, linestyle='-', marker='o', label=type_of_lis)
-    #plt.xlim(0, 1000)
-    #plt.ylim(0, 0.025)
+    if set_limit is "True"
+        plt.xlim(x_limit[0], x_limit[1])
+        plt.ylim(y_limit[0], y_limit[1])
     plt.xlabel('base pair')
     plt.ylabel('relative counts')
     plt.title(pairs_file_name + 'distance decay plot')
