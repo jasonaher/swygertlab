@@ -25,7 +25,9 @@ distance_decay.py is called inside the pipeline and will output a graph containi
 distance_decay.py has additional functionality intended to be used outside of the main script. 
 Essentially once you have multiple graphs you may want to see them on the same scale so you can directly compare them. 
 To do this you can call the python file accordingly.
+
 "py distance_decay.py name_of_your_pairs_file.pairs total_reads_in_pairs_file the_distance_you_want_graphed True x_limit1 x_limit2 y_limit1 y_limit2"
+
 The parameters are as follows a file, a number, a number, a string that needs to be either True or False (case sensitive) and it needs to be True if you 
 want to use set the limit, and the last 4 are all numbers indicating what limits you are setting. 
 
