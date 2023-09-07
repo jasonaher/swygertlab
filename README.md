@@ -22,6 +22,13 @@ example: sbatch MicC_pipeline_V3.sh your_microc_dataR1.fastq your_microc_dataR2.
 
 distance_decay.py is called inside the pipeline and will output a graph containing the average short contacts of the different orientations.
 
+distance_decay.py has additional functionality intended to be used outside of the main script. 
+Essentially once you have multiple graphs you may want to see them on the same scale so you can directly compare them. 
+To do this you can call the python file accordingly.
+"py distance_decay.py name_of_your_pairs_file.pairs total_reads_in_pairs_file the_distance_you_want_graphed True x_limit1 x_limit2 y_limit1 y_limit2"
+The parameters are as follows a file, a number, a number, a string that needs to be either True or False (case sensitive) and it needs to be True if you 
+want to use set the limit, and the last 4 are all numbers indicating what limits you are setting. 
+
 overlap_dist_decay.py is not called inside the pipeline and is there if you need to compare two different micro-c data sets. 
 
 There are a couple assumptions made by the MicC_pipeline.sh pipeline mostly about the absolute paths of files, and can be changed in the 
