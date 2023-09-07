@@ -12,19 +12,19 @@ module purge
 module load anaconda
 conda activate MicC # you will need an active conda environment with the bowtie2, samtools, pairtools, and cooler packages 
 
-r1=$1 
-r2=$2
+fastq1=$1 
+fastq2=$2
 file_path_to_genome="/pl/active/swygertlab/jasonher/Saccer3/Saccer3" #you need to change this to the location of your genome data
 file_path_to_chrom_sizes="pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes" # you need to change this to the location of your chromomsomes' sizes file
-distance_graphed=201
+distance_graphed=201 #change to distance you want to get graphed
 file_names=$3 # include how you want the files to be named 
 
-sample1=$(echo ${r1} | sed 's/\..*$//')
-sample2=$(echo ${r2} | sed 's/\..*$//')
+sample1=$(echo ${fastq1} | sed 's/\..*$//')
+sample2=$(echo ${fastq2} | sed 's/\..*$//')
 sample3=${file_names}
 #sample3=$sample1$sample2
-#bzip2 -d ${r1}
-#bzip2 -d ${r2}
+#bzip2 -d ${fastq1}
+#bzip2 -d ${fastq2}
 
 #bowtie2 will align the sample reads to the reference genome
 bowtie2 --very-sensitive -p 16 --reorder -x $file_path_to_genome -1 ${sample1}.fastq -2 ${sample2}.fastq -S ${sample3}.sam
@@ -55,10 +55,10 @@ same_reads=$(echo ${same} | cut -d ' ' -f 1)
 noIN_reads=$(echo ${noIN} | cut -d ' ' -f 1)
 sum=$((${in_reads}+${out_reads}+${same_reads}))
 #python distance_decay.py script generates short distance decay plots from 0 to 2000 bp
-python distance_decay.py ${sample3}_output_IN_reads.pairs ${in_reads} ${sum} $distance_graphed
-python distance_decay.py ${sample3}_output_OUT_reads.pairs ${out_reads} ${sum} $distance_graphed 
-python distance_decay.py ${sample3}_output_SAME_reads.pairs ${same_reads} ${sum} $distance_graphed
-python distance_decay.py ${sample3}_output_noIN.pairs ${noIN_reads} ${sum} $distance_graphed
+python distance_decay.py ${sample3}_output_IN_reads.pairs ${in_reads} ${sum} $distance_graphed "False"
+python distance_decay.py ${sample3}_output_OUT_reads.pairs ${out_reads} ${sum} $distance_graphed "False"
+python distance_decay.py ${sample3}_output_SAME_reads.pairs ${same_reads} ${sum} $distance_graphed "False"
+python distance_decay.py ${sample3}_output_noIN.pairs ${noIN_reads} ${sum} $distance_graphed "False"
 
 #rezipping files
 bgzip ${sample3}_output_IN_reads.pairs
