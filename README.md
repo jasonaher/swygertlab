@@ -11,7 +11,7 @@ A couple packages are needed to run this code all of which are downloadable from
 
 -Note that if you are new to this I highly recommend creating an environment for package installations of specific projects. In other words an environment
 for a chip-seq experiment and a different one for a micro-c experiment to prevent package conflicts. For CSU on alpine you need to run this command before
-you are able to run conda commands "source /curc/sw/anaconda3/latest/".
+you are able to run conda commands "source /curc/sw/anaconda3/latest".
 
 The main focal point of the pipeline begins with MicC_pipeline.sh and if properly working should be the only interface needed. 
 This code was designed with simplicity for the user in mind, and in parallel with this running the MicC_pipeline_V3.sh with your .fastq files
