@@ -28,7 +28,7 @@ def create_distance_decay_plot_list(file_to_read):
     """
     :param file_to_read:
     :return:
-    this method will parse through a .pairs file and create 3 graphs for that .pairs file
+    this method will parse through a .pairs file and a graph for that .pairs file
     """
     read_pairs_file = open(file_to_read, 'r')
     pairs_line = read_pairs_file.readline()
