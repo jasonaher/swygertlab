@@ -14,6 +14,8 @@ conda activate MicC # you will need an active conda environment with the bowtie2
 
 r1=$1 
 r2=$2
+file_path_to_genome="/pl/active/swygertlab/jasonher/Saccer3/Saccer3" #you need to change this to the location of your genome data
+file_path_to_chrom_sizes="pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes" # you need to change this to the location of your chromomsomes' sizes file
 #file_names=$3 # include how you want the files to be named 
 
 sample1=$(echo ${r1} | sed 's/\..*$//')
@@ -25,12 +27,12 @@ sample3=$sample1$sample2
 
 #bowtie2 will align the sample reads to the reference genome
 #after '-x' should be the directory that leads to files with your organism's whole genome
-bowtie2 --very-sensitive -p 16 --reorder -x /pl/active/swygertlab/jasonher/Saccer3/Saccer3 -1 ${sample1}.fastq -2 ${sample2}.fastq -S ${sample3}.sam
+bowtie2 --very-sensitive -p 16 --reorder -x $file_path_to_genome -1 ${sample1}.fastq -2 ${sample2}.fastq -S ${sample3}.sam
 
 #turning the bowtie2 .sam file output into a .bam file and using the .bam file to make a .pairs file
 #in the 2nd command here after '-c' should be a .chrSizes file which contains the base pair size of each chromosome
 samtools view -S -b ${sample3}.sam > ${sample3}.bam
-samtools view -h ${sample3}.bam | pairtools parse -c /pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes -o ${sample3}_parsed.pairs.gz
+samtools view -h ${sample3}.bam | pairtools parse -c $file_path_to_chrom_sizes -o ${sample3}_parsed.pairs.gz
 
 #pairtools sort puts the reads in base pair sequential order
 #dedup removes duplicates
@@ -71,10 +73,10 @@ pairix -f ${sample3}_output_OUT_reads.pairs.gz
 pairix -f ${sample3}_output_SAME_reads.pairs.gz
 pairix -f ${sample3}_output_noIN.pairs.gz
 
-cooler cload pairix /pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes:150 ${sample3}_output_IN_reads.pairs.gz ${sample3}_output_IN_reads.cool
-cooler cload pairix /pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes:150 ${sample3}_output_OUT_reads.pairs.gz ${sample3}_output_OUT_reads.cool
-cooler cload pairix /pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes:150 ${sample3}_output_SAME_reads.pairs.gz ${sample3}_output_SAME_reads.cool
-cooler cload pairix /pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes:150 ${sample3}_output_noIN.pairs.gz ${sample3}_output_noIN.cool
+cooler cload pairix $file_path_to_chrom_sizes:150 ${sample3}_output_IN_reads.pairs.gz ${sample3}_output_IN_reads.cool
+cooler cload pairix $file_path_to_chrom_sizes:150 ${sample3}_output_OUT_reads.pairs.gz ${sample3}_output_OUT_reads.cool
+cooler cload pairix $file_path_to_chrom_sizes:150 ${sample3}_output_SAME_reads.pairs.gz ${sample3}_output_SAME_reads.cool
+cooler cload pairix $file_path_to_chrom_sizes:150 ${sample3}_output_noIN.pairs.gz ${sample3}_output_noIN.cool
 
 cooler balance ${sample3}_output_IN_reads.cool
 cooler zoomify ${sample3}_output_IN_reads.cool
