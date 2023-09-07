@@ -8,6 +8,7 @@ A couple packages are needed to run this code all of which are downloadable from
 - numpy
 - matplotlib
 - deeptools
+
 -Note that if you are new to this I highly recommend creating an environment for package installations of specific projects. In other words an environment
 for a chip-seq experiment and a different one for a micro-c experiment to prevent package conflicts. For CSU on alpine you need to run this command before
 you are able to run conda commands "source /curc/sw/anaconda3/latest/".
