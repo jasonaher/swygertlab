@@ -16,21 +16,20 @@ r1=$1
 r2=$2
 file_path_to_genome="/pl/active/swygertlab/jasonher/Saccer3/Saccer3" #you need to change this to the location of your genome data
 file_path_to_chrom_sizes="pl/active/swygertlab/jasonher/micro-c/sacCer3.chrSizes" # you need to change this to the location of your chromomsomes' sizes file
-#file_names=$3 # include how you want the files to be named 
+distance_graphed=201
+file_names=$3 # include how you want the files to be named 
 
 sample1=$(echo ${r1} | sed 's/\..*$//')
 sample2=$(echo ${r2} | sed 's/\..*$//')
-#sample3=${file_names}
-sample3=$sample1$sample2
+sample3=${file_names}
+#sample3=$sample1$sample2
 #bzip2 -d ${r1}
 #bzip2 -d ${r2}
 
 #bowtie2 will align the sample reads to the reference genome
-#after '-x' should be the directory that leads to files with your organism's whole genome
 bowtie2 --very-sensitive -p 16 --reorder -x $file_path_to_genome -1 ${sample1}.fastq -2 ${sample2}.fastq -S ${sample3}.sam
 
 #turning the bowtie2 .sam file output into a .bam file and using the .bam file to make a .pairs file
-#in the 2nd command here after '-c' should be a .chrSizes file which contains the base pair size of each chromosome
 samtools view -S -b ${sample3}.sam > ${sample3}.bam
 samtools view -h ${sample3}.bam | pairtools parse -c $file_path_to_chrom_sizes -o ${sample3}_parsed.pairs.gz
 
@@ -56,10 +55,10 @@ same_reads=$(echo ${same} | cut -d ' ' -f 1)
 noIN_reads=$(echo ${noIN} | cut -d ' ' -f 1)
 sum=$((${in_reads}+${out_reads}+${same_reads}))
 #python distance_decay.py script generates short distance decay plots from 0 to 2000 bp
-python distance_decay.py ${sample3}_output_IN_reads.pairs ${in_reads} ${sum}
-python distance_decay.py ${sample3}_output_OUT_reads.pairs ${out_reads} ${sum}
-python distance_decay.py ${sample3}_output_SAME_reads.pairs ${same_reads} ${sum}
-python distance_decay.py ${sample3}_output_noIN.pairs ${noIN_reads} ${sum}
+python distance_decay.py ${sample3}_output_IN_reads.pairs ${in_reads} ${sum} $distance_graphed
+python distance_decay.py ${sample3}_output_OUT_reads.pairs ${out_reads} ${sum} $distance_graphed 
+python distance_decay.py ${sample3}_output_SAME_reads.pairs ${same_reads} ${sum} $distance_graphed
+python distance_decay.py ${sample3}_output_noIN.pairs ${noIN_reads} ${sum} $distance_graphed
 
 #rezipping files
 bgzip ${sample3}_output_IN_reads.pairs
